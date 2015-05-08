@@ -44,9 +44,9 @@ integration is not done by ``collective.editmodeswitcher``.
 Links
 -----
 
-- Main github project repository: https://github.com/4teamwork/collective.editmodeswitcher
-- Issue tracker: https://github.com/4teamwork/collective.editmodeswitcher/issues
-- Package on pypi: http://pypi.python.org/pypi/collective.editmodeswitcher
+- Github: https://github.com/4teamwork/collective.editmodeswitcher
+- Issues: https://github.com/4teamwork/collective.editmodeswitcher/issues
+- Pypi: http://pypi.python.org/pypi/collective.editmodeswitcher
 - Continuous integration: https://jenkins.4teamwork.ch/search?q=collective.editmodeswitcher
 
 

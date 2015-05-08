@@ -33,7 +33,7 @@ setup(name='collective.editmodeswitcher',
         ],
 
       keywords='plone edit mode switch toggle',
-      author='4teamwork GmbH',
+      author='4teamwork AG',
       author_email='mailto:info@4teamwork.ch',
       url='https://github.com/4teamwork/collective.editmodeswitcher',
       license='GPL2',

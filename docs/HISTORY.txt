@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.0.2 (unreleased)
+1.0.2 (2016-02-12)
 ------------------
 
 - Implement traversable get_state method, which returns the curren edit-mode state.

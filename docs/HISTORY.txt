@@ -5,7 +5,11 @@ Changelog
 1.0.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Implement traversable get_state method, which returns the curren edit-mode state.
+  [mathias.leimgruber]
+
+- Use ftw.testbrowser for testing.
+  [mathias.leimgruber]
 
 
 1.0.1 (2013-05-24)

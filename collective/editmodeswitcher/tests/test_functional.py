@@ -1,9 +1,10 @@
 from collective.editmodeswitcher.testing import PACKAGE_FUNCTIONAL_TESTING
-from plone.app.testing import SITE_OWNER_NAME
-from plone.app.testing import SITE_OWNER_PASSWORD
-from plone.testing.z2 import Browser
-from pyquery import PyQuery
+from ftw.testbrowser import browser
+from ftw.testbrowser import browsing
+from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
 from unittest2 import TestCase
+import transaction
 
 
 class TestIntegration(TestCase):
@@ -11,29 +12,26 @@ class TestIntegration(TestCase):
     layer = PACKAGE_FUNCTIONAL_TESTING
 
     def setUp(self):
-        self.browser = Browser(self.layer['app'])
-        self.browser.handleErrors = False
-        self.browser.addHeader('Authorization', 'Basic %s:%s' % (
-                SITE_OWNER_NAME, SITE_OWNER_PASSWORD,))
-
-        self.portal_url = self.layer['portal'].absolute_url()
+        self.portal = self.layer['portal']
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+        transaction.commit()
 
     def is_editable(self):
-        doc = PyQuery(self.browser.contents)
-        return len(doc('.documentEditable')) > 0
+        return len(browser.css('.documentEditable')) > 0
 
-    def test_toggling_edit_mode(self):
+    @browsing
+    def test_toggling_edit_mode(self, browser):
         # The plone site should be "editable" by default for the site owner.
-        self.browser.open(self.portal_url)
+        browser.login().visit()
         self.assertTrue(
             self.is_editable(),
             'No ".documentEditable" found on site root. Markup changed?')
 
         # When we hit the "switch-editmode" view we are redirected back
         # to the context's default view:
-        self.browser.open(self.portal_url + '/@@switch-editmode')
+        browser.visit(view='@@switch-editmode')
         self.assertEqual(
-            self.portal_url, self.browser.url,
+            self.portal.absolute_url(), browser.url,
             'Expected to be redirected to the context\'s default view but'
             ' (site root in this case) but was not.')
 
@@ -41,16 +39,37 @@ class TestIntegration(TestCase):
         self.assertFalse(self.is_editable(), 'Site root still editable.')
 
         # even when reloading:
-        self.browser.open(self.portal_url)
+        browser.visit()
         self.assertFalse(self.is_editable(),
                          'Editable switch not persistent?')
 
         # when switching back on we are redirected to the default view again:
-        self.browser.open(self.portal_url + '/@@switch-editmode')
+        browser.visit(view='@@switch-editmode')
         self.assertEqual(
-            self.portal_url, self.browser.url,
+            self.portal.absolute_url(), browser.url,
             'Redirect seems to be wrong when re-enabling edit mode.')
 
         # and it is now editable again:
         self.assertTrue(self.is_editable(),
                         'Re-enabling the edit mode is not working.')
+
+    @browsing
+    def test_get_state_returns_enabled_by_default(self, browser):
+        browser.login()
+        self.assertEquals(
+            'enabled',
+            browser.visit(view='@@switch-editmode/get_state').contents)
+
+    @browsing
+    def test_get_state_returns_disabled_after_switching(self, browser):
+        browser.login()
+        browser.visit(view='@@switch-editmode')
+
+        self.assertEquals(
+            'disabled',
+            browser.visit(view='@@switch-editmode/get_state').contents)
+
+        browser.visit(view='@@switch-editmode')
+        self.assertEquals(
+            'enabled',
+            browser.visit(view='@@switch-editmode/get_state').contents)

@@ -6,11 +6,7 @@ version = '1.0.2.dev0'
 
 tests_require = [
     'unittest2',
-    'pyquery',
-
-    'z3c.autoinclude',
-    'zope.configuration',
-
+    'ftw.testbrowser',
     'plone.app.testing',
     ]
 

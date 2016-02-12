@@ -19,6 +19,7 @@
         name="switch-editmode"
         class=".browser.EditModeSwitcher"
         permission="zope.Public"
+        allowed_attributes="get_state"
     />
 
 </configure>

@@ -9,12 +9,11 @@ class PackageLayer(PloneSandboxLayer):
     defaultBases = (PLONE_FIXTURE, )
 
     def setUpZope(self, app, configurationContext):
-        import z3c.autoinclude
-        xmlconfig.file('meta.zcml', z3c.autoinclude,
-                       context=configurationContext)
         xmlconfig.string(
             '<configure xmlns="http://namespaces.zope.org/zope">'
+            '  <include package="z3c.autoinclude" file="meta.zcml" />'
             '  <includePlugins package="plone" />'
+            '  <includePluginsOverrides package="plone" />'
             '</configure>',
             context=configurationContext)
 

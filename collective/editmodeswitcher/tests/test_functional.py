@@ -52,3 +52,24 @@ class TestIntegration(TestCase):
         # and it is now editable again:
         self.assertTrue(self.is_editable(),
                         'Re-enabling the edit mode is not working.')
+
+    @browsing
+    def test_get_state_returns_enabled_by_default(self, browser):
+        browser.login()
+        self.assertEquals(
+            'enabled',
+            browser.visit(view='@@switch-editmode/get_state').contents)
+
+    @browsing
+    def test_get_state_returns_disabled_after_switching(self, browser):
+        browser.login()
+        browser.visit(view='@@switch-editmode')
+
+        self.assertEquals(
+            'disabled',
+            browser.visit(view='@@switch-editmode/get_state').contents)
+
+        browser.visit(view='@@switch-editmode')
+        self.assertEquals(
+            'enabled',
+            browser.visit(view='@@switch-editmode/get_state').contents)

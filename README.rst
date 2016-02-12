@@ -34,7 +34,8 @@ Usage
 
 For toggling the edit-mode call the view ``@@switch-editmode``.
 This will toggle the edit mode and store the current edit mode status
-in a cookie for further requests.
+in a cookie for further requests. You can get the current state by calling
+``@@switch-editmode/get_state``, this will return `enabled`, or 'disabled'.
 
 You may want to place an action somewhere for toggling the edit mode - this
 integration is not done by ``collective.editmodeswitcher``.

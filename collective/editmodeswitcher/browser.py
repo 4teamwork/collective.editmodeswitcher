@@ -18,7 +18,13 @@ class EditModeSwitcher(BrowserView):
         if self.request.get(COOKIE_NAME, '') == '1':
             self.request.response.expireCookie(COOKIE_NAME, path='/')
         else:
-            self.request.response.setCookie(COOKIE_NAME, '1', path='/',
+            self.request.response.setCookie(
+                COOKIE_NAME, '1', path='/',
                 expires=build_http_date(time.time() + COOKIE_LIFETIME))
 
         self.request.response.redirect(context.absolute_url(), status=302)
+
+    def get_state(self):
+        """Returns the enabled/disabled for the edit mode."""
+        cookie_value = self.request.get(COOKIE_NAME, '')
+        return cookie_value == '1' and 'disabled' or 'enabled'

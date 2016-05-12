@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.0.3 (unreleased)
+1.0.3 (2016-05-12)
 ------------------
 
 - Provide plone.app.caching etag "editmode". [jone]

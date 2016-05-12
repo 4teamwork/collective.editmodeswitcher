@@ -1,26 +1,16 @@
-from collective.editmodeswitcher.testing import PACKAGE_FUNCTIONAL_TESTING
+from collective.editmodeswitcher.tests import FunctionalTestCase
 from ftw.testbrowser import browser
 from ftw.testbrowser import browsing
-from plone.app.testing import setRoles
-from plone.app.testing import TEST_USER_ID
-from unittest2 import TestCase
-import transaction
 
 
-class TestIntegration(TestCase):
-
-    layer = PACKAGE_FUNCTIONAL_TESTING
-
-    def setUp(self):
-        self.portal = self.layer['portal']
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        transaction.commit()
+class TestIntegration(FunctionalTestCase):
 
     def is_editable(self):
         return len(browser.css('.documentEditable')) > 0
 
     @browsing
     def test_toggling_edit_mode(self, browser):
+        self.grant('Manager')
         # The plone site should be "editable" by default for the site owner.
         browser.login().visit()
         self.assertTrue(

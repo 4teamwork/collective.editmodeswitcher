@@ -19,4 +19,6 @@
         allowed_attributes="get_state"
     />
 
+    <adapter factory=".caching.EditModeEtag" name="editmode" />
+
 </configure>

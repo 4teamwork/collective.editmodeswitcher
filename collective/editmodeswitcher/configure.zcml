@@ -5,9 +5,6 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     i18n_domain="collective.editmodeswitcher">
 
-    <!-- Include configuration for dependencies listed in setup.py -->
-    <includeDependencies package="." />
-
     <subscriber
         for="*
              zope.app.publication.interfaces.IBeforeTraverseEvent"

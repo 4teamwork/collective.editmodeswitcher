@@ -41,6 +41,15 @@ You may want to place an action somewhere for toggling the edit mode - this
 integration is not done by ``collective.editmodeswitcher``.
 
 
+Caching
+-------
+
+``collective.editmodeswitcher`` provides a ``plone.app.caching`` etag adapter
+named ``editmode``.
+This etag can be used in the caching configuration in order to make the cache
+flush when switching the edit mode.
+
+
 
 Links
 -----

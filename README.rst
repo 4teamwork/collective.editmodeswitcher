@@ -26,7 +26,7 @@ or add it as a dependency to one of your packages.
 Compatibility
 -------------
 
-Runs with `Plone <http://www.plone.org/>`_ `4.2` and `4.3`.
+Runs with `Plone <http://www.plone.org/>`_ `4.2`, `4.3` and `5.1`.
 
 
 Usage

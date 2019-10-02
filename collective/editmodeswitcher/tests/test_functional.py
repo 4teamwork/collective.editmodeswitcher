@@ -1,12 +1,19 @@
 from collective.editmodeswitcher.tests import FunctionalTestCase
 from ftw.testbrowser import browser
 from ftw.testbrowser import browsing
+import pkg_resources
+
+IS_PLONE_5 = pkg_resources.get_distribution('Products.CMFPlone').version >= '5'
 
 
 class TestIntegration(FunctionalTestCase):
 
     def is_editable(self):
-        return len(browser.css('.documentEditable')) > 0
+        css_selector = '.documentEditable'
+        if IS_PLONE_5:
+            css_selector = '.plone-toolbar-main li'
+
+        return len(browser.css(css_selector)) > 0
 
     @browsing
     def test_toggling_edit_mode(self, browser):
@@ -15,7 +22,7 @@ class TestIntegration(FunctionalTestCase):
         browser.login().visit()
         self.assertTrue(
             self.is_editable(),
-            'No ".documentEditable" found on site root. Markup changed?')
+            'Selector not found on site root. Markup changed?')
 
         # When we hit the "switch-editmode" view we are redirected back
         # to the context's default view:

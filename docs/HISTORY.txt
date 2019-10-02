@@ -6,6 +6,7 @@ Changelog
 ------------------
 
 - Drop Plone 4.1 support. [jone]
+- Add Plone 5.1 support. [tinagerber]
 
 
 1.0.3 (2016-05-12)
